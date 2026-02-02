@@ -3,12 +3,17 @@
 - 179,502개 레시피 이미지 다운로드
 - 병렬 처리 + 체크포인트
 """
+import sys
+from pathlib import Path
+
+# 프로젝트 루트를 path에 추가
+PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
 import json
 import time
 import os
 import requests
-from pathlib import Path
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -19,9 +24,9 @@ MAX_RETRIES = 3
 SAVE_INTERVAL = 100
 TIMEOUT = 10
 
-REFINED_DIR = Path("data/processed/recipes_refined")
-IMAGE_DIR = Path("data/images/recipes")
-CHECKPOINT_FILE = Path("data/images/checkpoint_images.json")
+REFINED_DIR = PROJECT_ROOT / "data/processed/recipes_refined"
+IMAGE_DIR = PROJECT_ROOT / "data/images/recipes"
+CHECKPOINT_FILE = PROJECT_ROOT / "data/images/checkpoint_images.json"
 
 IMAGE_DIR.mkdir(parents=True, exist_ok=True)
 

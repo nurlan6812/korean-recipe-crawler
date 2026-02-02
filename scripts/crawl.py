@@ -1,11 +1,16 @@
 """
 만개의 레시피 크롤러 - 메인 실행 파일
 """
+import sys
+from pathlib import Path
+
+# 프로젝트 루트를 path에 추가
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 import argparse
 import asyncio
 import aiohttp
 import aiofiles
-from pathlib import Path
 from typing import Set, List
 from tqdm import tqdm
 
@@ -13,19 +18,19 @@ from config.settings import (
     CHECKPOINT_FILE, FAILED_IDS_FILE,
     RAW_DIR, IMAGES_DIR, REQUEST_DELAY
 )
-from crawlers.category_crawler import crawl_categories
-from crawlers.recipe_crawler import (
+from src.crawlers.category_crawler import crawl_categories
+from src.crawlers.recipe_crawler import (
     get_total_pages, crawl_recipe_list,
     crawl_recipe_detail, save_recipe
 )
-from storage.csv_handler import (
+from src.storage.csv_handler import (
     save_recipes_to_csv, save_ingredients_to_csv,
     save_steps_to_csv, save_categories_to_csv, append_recipe_to_csv
 )
-from storage.json_handler import (
+from src.storage.json_handler import (
     save_recipe_json, save_categories_json, get_raw_recipe_ids
 )
-from utils.helpers import (
+from src.utils.helpers import (
     logger, Checkpoint, save_json, load_json, clean_image_url
 )
 

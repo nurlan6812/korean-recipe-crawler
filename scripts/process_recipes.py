@@ -6,27 +6,35 @@
 - 진행률 표시
 - 이미 처리된 파일 스킵
 """
+import sys
+from pathlib import Path
+
+# 프로젝트 루트를 path에 추가
+PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
 import json
 import time
 import re
 import os
-from pathlib import Path
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import google.generativeai as genai
 
 # ===== 설정 =====
-API_KEY = "AIzaSyDCuaCq5bo4-8PrGTuYEOLoUz3fLwxXzQ8"
+API_KEY = os.environ.get("GOOGLE_API_KEY", "")
+if not API_KEY:
+    raise ValueError("GOOGLE_API_KEY 환경변수를 설정하세요")
+
 MAX_WORKERS = 10          # 동시 처리 스레드 수
 BATCH_SIZE = 1000         # 배치당 처리 개수
 MAX_RETRIES = 3           # 실패시 재시도 횟수
 RETRY_DELAY = 5           # 재시도 대기 시간(초)
 SAVE_INTERVAL = 100       # N개마다 중간 저장
 
-RAW_DIR = Path("data/raw/recipes")
-OUTPUT_DIR = Path("data/processed/recipes_refined")
-CHECKPOINT_FILE = Path("data/processed/checkpoint_refined.json")
+RAW_DIR = PROJECT_ROOT / "data/raw/recipes"
+OUTPUT_DIR = PROJECT_ROOT / "data/processed/recipes_refined"
+CHECKPOINT_FILE = PROJECT_ROOT / "data/processed/checkpoint_refined.json"
 
 # ===== 초기화 =====
 genai.configure(api_key=API_KEY)

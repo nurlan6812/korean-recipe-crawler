@@ -9,9 +9,5 @@ aiofiles>=23.0.0
 pandas>=2.0.0
 tqdm>=4.66.0
 
-# LLM 전처리 (Qwen3-VL)
-torch>=2.0.0
-transformers>=4.57.0
-accelerate>=0.25.0
-bitsandbytes>=0.41.0
-unsloth
+# LLM 전처리 (Gemini API)
+google-generativeai>=0.3.0

@@ -59,8 +59,8 @@ LLM_MAX_NEW_TOKENS = 128
 
 # Gemini API 설정
 import os
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-GEMINI_MODEL = "gemini-2.0-flash-exp"  # 빠르고 저렴한 모델
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
+GEMINI_MODEL = "gemini-2.0-flash"
 
 # 디렉토리 생성
 for dir_path in [DATA_DIR, RAW_DIR, PROCESSED_DIR, IMAGES_DIR, LOG_DIR]:

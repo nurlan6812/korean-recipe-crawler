@@ -2,19 +2,25 @@
 전처리 실행 스크립트
 크롤링 완료 후 LLM을 사용하여 데이터 전처리
 """
-import argparse
+import sys
 from pathlib import Path
+
+# 프로젝트 루트를 path에 추가
+PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
+import argparse
 from typing import List, Dict, Any
 from tqdm import tqdm
 
 from config.settings import RAW_DIR, PROCESSED_DIR
-from processors.llm_processor import LLMProcessor, GeminiProcessor, RuleBasedProcessor
-from storage.json_handler import (
+from src.processors.llm_processor import LLMProcessor, GeminiProcessor, RuleBasedProcessor
+from src.storage.json_handler import (
     load_raw_recipe, get_raw_recipe_ids,
     save_recipe_json, load_recipe_json
 )
-from storage.csv_handler import save_recipes_to_csv, save_ingredients_to_csv, save_steps_to_csv
-from utils.helpers import logger, load_json, save_json
+from src.storage.csv_handler import save_recipes_to_csv, save_ingredients_to_csv, save_steps_to_csv
+from src.utils.helpers import logger, load_json, save_json
 
 
 def process_with_llm(recipe_ids: List[str] = None, batch_size: int = 100):

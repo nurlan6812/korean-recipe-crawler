@@ -4,25 +4,33 @@
 - 음식명 + 레시피(steps) 함께 검증
 - 수식어 제거, 복수 음식 판별
 """
+import sys
+from pathlib import Path
+
+# 프로젝트 루트를 path에 추가
+PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 
 import json
 import re
 import time
 import os
-from pathlib import Path
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import google.generativeai as genai
 
 # ===== 설정 =====
-API_KEY = "AIzaSyDCuaCq5bo4-8PrGTuYEOLoUz3fLwxXzQ8"
+API_KEY = os.environ.get("GOOGLE_API_KEY", "")
+if not API_KEY:
+    raise ValueError("GOOGLE_API_KEY 환경변수를 설정하세요")
+
 MAX_WORKERS = 10
 BATCH_SIZE = 500
 MAX_RETRIES = 3
 SAVE_INTERVAL = 100
 
-INPUT_DIR = Path("data/processed/recipes_refined")
-CHECKPOINT_FILE = Path("data/processed/checkpoint_validation.json")
+INPUT_DIR = PROJECT_ROOT / "data/processed/recipes_refined"
+CHECKPOINT_FILE = PROJECT_ROOT / "data/processed/checkpoint_validation.json"
 
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel("gemini-2.0-flash")
