@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+
+# Data (too large for git)
+data/
+logs/
+
+# IDE & Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cache
+unsloth_compiled_cache/
+.claude/
+
+# Test files
+*.png
+*.jpg
+*.jpeg
+
+# Checkpoints
+checkpoint*.json
+failed_ids.json
